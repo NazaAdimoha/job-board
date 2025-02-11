@@ -6,9 +6,13 @@ import { toast } from 'sonner';
 import { JobSearchFilters } from '@/types/job-types';
 import SearchFilters from '../search-filters';
 import JobCard from '@/components/ui/job-card';
+import { Button } from '@/components/ui/button';
+import AppModal from '@/components/ui/app-modal';
+import ApplyPage from '../create-job-modal';
 
 
 export default function JobsPage() {
+  const [openModal, setOpenModal] = useState(false);
   const [filters, setFilters] = useState<JobSearchFilters>({
     query: '',
     country: '',
@@ -92,7 +96,7 @@ export default function JobsPage() {
             </p>
           </div>
           
-          <div className="mt-4 md:mt-0">
+          <div className="mt-4 md:mt-0 flex flex-col items-center space-x-4 md:flex-row md:items-center">
             <select
               className="px-4 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-600"
               value="relevance"
@@ -102,6 +106,10 @@ export default function JobsPage() {
               <option value="date">Sort by Date</option>
               <option value="salary">Sort by Salary</option>
             </select>
+
+            <div>
+            <Button variant='primary' onClick={() => setOpenModal(true)}> Create Job </Button>
+          </div>
           </div>
         </div>
 
@@ -164,6 +172,10 @@ export default function JobsPage() {
           </div>
         )}
       </div>
+
+      <AppModal open={openModal} setOpen={setOpenModal}>
+        <ApplyPage setOpen={setOpenModal} />
+      </AppModal>
     </div>
   );
 }
