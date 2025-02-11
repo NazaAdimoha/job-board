@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useIsSavedJob, useJobsQuery, useSaveJobMutation } from '@/lib/api/api';
+import {  useJobsQuery, useSaveJobMutation } from '@/lib/api/api';
 import { toast } from 'sonner';
 import { JobSearchFilters } from '@/types/job-types';
 import SearchFilters from '../search-filters';
@@ -77,6 +77,7 @@ export default function JobsPage() {
   }
 
   const allJobs = data?.pages.flatMap(page => page.data) ?? [];
+  console.log(allJobs, "allJobs::::");
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -133,7 +134,7 @@ export default function JobsPage() {
                   <JobCard
                     job={job}
                     onSave={handleSaveJob}
-                    isSaved={useIsSavedJob(job.job_id).data}
+                    // isSaved={useIsSavedJob(job.job_id).data}
                   />
                 </motion.div>
               ))}

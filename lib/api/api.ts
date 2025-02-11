@@ -141,9 +141,9 @@ export const useSaveJobMutation = () => {
   });
 };
 
-export const useIsSavedJob = (jobId: string) => {
-  return useQuery({
-    queryKey: ['savedJob', jobId],
-    queryFn: () => getSavedJobs().includes(jobId)
-  });
-};
+// export const useIsSavedJob = (jobId: string) => {
+//   return useQuery({
+//     queryKey: ['savedJob', jobId],
+//     queryFn: () => getSavedJobs().includes(jobId)
+//   });
+// };
