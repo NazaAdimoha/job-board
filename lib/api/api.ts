@@ -7,7 +7,6 @@ interface PaginatedJobsResponse extends JobsResponse {
   nextPage?: number;
 }
 
-// Custom response type for job details to match JobsResponse structure
 interface JobDetailsResponse extends Omit<JobsResponse, 'parameters'> {
   parameters: {
     job_id: string;
@@ -54,9 +53,9 @@ const isWithinDateRange = (timestamp: number, datePosted: string) => {
 };
 
 export const useJobsQuery = (filters: JobSearchFilters) => {
-  return useInfiniteQuery<PaginatedJobsResponse>({
+  return useInfiniteQuery<PaginatedJobsResponse, Error>({
     queryKey: ['jobs', filters],
-    queryFn: async ({ pageParam }: { pageParam: number }) => {
+    queryFn: async ({ pageParam = 1 }: any) => {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
       
