@@ -1,9 +1,16 @@
 "use client";
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { BookmarkPlus, BookmarkCheck, MapPin, Building, Clock } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { Job } from '@/types/job-types';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  BookmarkPlus,
+  BookmarkCheck,
+  MapPin,
+  Building,
+  Clock,
+} from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
+import { Job } from "@/types/job-types";
+import { useRouter } from "next/navigation";
 
 interface JobCardProps {
   job: Job;
@@ -13,20 +20,27 @@ interface JobCardProps {
 
 const JobCard = ({ job, onSave, isSaved = false }: JobCardProps) => {
   const [isBookmarked, setIsBookmarked] = useState(isSaved);
+  const router = useRouter();
 
-  const handleSave = () => {
+  const handleSave = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsBookmarked(!isBookmarked);
     onSave?.(job.job_id);
+  };
+
+  const handleCardClick = () => {
+    router.push(`/jobs/${job.job_id}`);
   };
 
   const postedDate = new Date(job.job_posted_at_datetime_utc);
 
   return (
     <motion.div
+      onClick={handleCardClick}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
     >
       <div className="p-6">
         <div className="flex justify-between items-start">
@@ -46,7 +60,9 @@ const JobCard = ({ job, onSave, isSaved = false }: JobCardProps) => {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2">
                 {job.job_title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">{job.employer_name}</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                {job.employer_name}
+              </p>
             </div>
           </div>
           <button
@@ -78,9 +94,13 @@ const JobCard = ({ job, onSave, isSaved = false }: JobCardProps) => {
               Key Responsibilities
             </h4>
             <ul className="text-sm text-gray-600 dark:text-gray-300 list-disc list-inside space-y-1">
-              {job.job_highlights.Responsibilities.slice(0, 2).map((resp, index) => (
-                <li key={index} className="line-clamp-1">{resp}</li>
-              ))}
+              {job.job_highlights.Responsibilities.slice(0, 2).map(
+                (resp, index) => (
+                  <li key={index} className="line-clamp-1">
+                    {resp}
+                  </li>
+                )
+              )}
             </ul>
           </div>
         )}
@@ -91,7 +111,9 @@ const JobCard = ({ job, onSave, isSaved = false }: JobCardProps) => {
               {job.job_salary}
             </span>
           ) : (
-            <span className="text-gray-500 dark:text-gray-400 text-sm">Salary not specified</span>
+            <span className="text-gray-500 dark:text-gray-400 text-sm">
+              Salary not specified
+            </span>
           )}
           <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full">
             {job.job_employment_type}

@@ -1,20 +1,39 @@
+"use client";
 import { motion } from 'framer-motion';
 import { SearchIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 
 
 type SearchProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  debounceTime?: number;
 };
 
-export const Search = ({ value, onChange, placeholder = 'Search jobs...' }: SearchProps) => {
+export const Search = ({ value: externalValue, onChange, placeholder = 'Search jobs...', debounceTime = 500 }: SearchProps) => {
+  const [internalValue, setInternalValue] = useState(externalValue);
+
+  // Create my debounced function here
+  const debouncedOnChange = debounce(onChange, debounceTime);
+
+  // I want to Update internal value when external value changes
+  useEffect(() => {
+    setInternalValue(externalValue);
+  }, [externalValue]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInternalValue(newValue); // Update internal state immediately
+    debouncedOnChange(newValue); // Debounce the callback to parent
+  };
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
       <input
         type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={internalValue}
+        onChange={handleChange}
         placeholder={placeholder}
         className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />

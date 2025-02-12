@@ -12,8 +12,8 @@ const eb_garamond = EB_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: "Job Board App",
-  description: "Job Board App by Naza",
+  title: "JobBoarD_NG",
+  description: "JobBoarD_NG",
 };
 
 export default function RootLayout({

@@ -58,10 +58,10 @@ const LandingPage = () => {
             className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
             variants={fadeIn}
           >
-            <ShinyButton href="/post-job" className="py-4">
+            <ShinyButton href="/sign-in" className="py-4">
               Start Hiring Today
             </ShinyButton>
-            <ShinyButton href="/jobs" className="py-4">
+            <ShinyButton href="/sign-up" className="py-4">
               Explore Opportunities
             </ShinyButton>
           </motion.div>
@@ -185,7 +185,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="px-4 py-12 text-gray-400 bg-gray-900">
         <div className="max-w-6xl mx-auto text-center">
-          <p>&copy; 2025 JobBoard. All rights reserved.</p>
+          <p>&copy; 2025 JobBoarD_NG. All rights reserved.</p>
         </div>
       </footer>
     </div>

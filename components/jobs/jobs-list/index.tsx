@@ -9,6 +9,7 @@ import JobCard from '@/components/ui/job-card';
 import { Button } from '@/components/ui/button';
 import AppModal from '@/components/ui/app-modal';
 import ApplyPage from '../create-job-modal';
+import ErrorBoundary from '@/components/ui/error-boundry';
 
 
 export default function JobsPage() {
@@ -64,9 +65,7 @@ export default function JobsPage() {
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-          Error Loading Jobs
-        </h2>
+        <ErrorBoundary error={error} />
         <p className="text-gray-600 dark:text-gray-300">
           {error instanceof Error ? error.message : 'Failed to load jobs'}
         </p>

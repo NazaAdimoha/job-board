@@ -272,7 +272,7 @@ export const mockJobs: Job[] = [
     job_onet_job_zone: "4",
   },
   {
-    job_id: "4",
+    job_id: "12",
     job_title: "GoLang Developer",
     employer_name: "Google Inc",
     employer_logo: "https://example.com/logo.png",
