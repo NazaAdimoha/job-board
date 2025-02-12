@@ -1,6 +1,7 @@
+import { Job } from '@/types/job-types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Job } from '../api/api';
+
 
 
 type SavedJobsState = {
