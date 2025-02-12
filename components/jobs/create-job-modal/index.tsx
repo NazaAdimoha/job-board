@@ -68,7 +68,7 @@ export default function ApplyPage({ setOpen }: { setOpen: (open: boolean) => voi
         error={formState.errors.coverLetter}
       />
       
-      <Button variant='primary' type="submit" disabled={formState.isSubmitting}> Submit Application </Button>
+      <Button variant='default' type="submit" disabled={formState.isSubmitting}> Submit Application </Button>
     </motion.form>
   );
 }

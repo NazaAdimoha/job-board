@@ -108,7 +108,7 @@ export default function JobsPage() {
             </select>
 
             <div>
-            <Button variant='primary' onClick={() => setOpenModal(true)}> Create Job </Button>
+            <Button variant='default' onClick={() => setOpenModal(true)}> Create Job </Button>
           </div>
           </div>
         </div>
