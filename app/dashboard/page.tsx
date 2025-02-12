@@ -2,11 +2,12 @@ import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import Jobs from "../jobs/page"
 
+interface SearchParams {
+  [key: string]: string | string[] | undefined
+}
 
 interface PageProps {
-  searchParams: {
-    [key: string]: string | string[] | undefined
-  }
+  searchParams: SearchParams
 }
 
 const Page = async ({ searchParams }: PageProps) => {
