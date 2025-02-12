@@ -7,7 +7,7 @@ interface SearchParams {
 }
 
 interface PageProps {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>;
 }
 
 const Page = async ({ searchParams }: PageProps) => {
@@ -17,18 +17,19 @@ const Page = async ({ searchParams }: PageProps) => {
     redirect("/sign-in")
   }
 
+  const params = await searchParams;
 
+  const intent = params.intent;
 //   if (!user) {
 //     return redirect("/welcome")
 //   }
 
-  const intent = searchParams.intent
 
     if (intent) {
         return redirect(`/dashboard?intent=${intent}`)
     }
 
-  const success = searchParams.success
+  const success = params.success
 
   return (
     <>
