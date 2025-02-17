@@ -1,7 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { SearchIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
 
@@ -12,21 +12,28 @@ type SearchProps = {
   debounceTime?: number;
 };
 
-export const Search = ({ value: externalValue, onChange, placeholder = 'Search jobs...', debounceTime = 500 }: SearchProps) => {
+export const Search = ({ value: externalValue, onChange, placeholder = 'Search jobs...', debounceTime = 1000 }: SearchProps) => {
   const [internalValue, setInternalValue] = useState(externalValue);
 
   // Create my debounced function here
-  const debouncedOnChange = debounce(onChange, debounceTime);
+  const debouncedOnChange = useMemo(() => debounce(onChange, debounceTime), [onChange, debounceTime]);
 
   // I want to Update internal value when external value changes
   useEffect(() => {
     setInternalValue(externalValue);
   }, [externalValue]);
 
+  //I will clean up the side effect here
+  useEffect(() => {
+    return () => {
+      debouncedOnChange.cancel();
+    };
+  }, [debouncedOnChange]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInternalValue(newValue); // Update internal state immediately
-    debouncedOnChange(newValue); // Debounce the callback to parent
+    debouncedOnChange(newValue); 
   };
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">

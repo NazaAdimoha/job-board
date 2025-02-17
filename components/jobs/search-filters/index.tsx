@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { Filter, MapPin, Briefcase, Calendar } from 'lucide-react';
@@ -22,15 +22,22 @@ const SearchFilters = ({ onFiltersChange }: SearchFiltersProps) => {
     datePosted: 'all'
   });
 
-  const debouncedFiltersChange = debounce(onFiltersChange, 500);
+  const debouncedOnFiltersChange = useRef(debounce(onFiltersChange, 500));
+  const onFiltersChangeRef = useRef(onFiltersChange);
 
   useEffect(() => {
-    debouncedFiltersChange(filters);
-    // Cleanup
+    onFiltersChangeRef.current = onFiltersChange;
+    debouncedOnFiltersChange.current = debounce(onFiltersChangeRef.current, 500);
+  }, [onFiltersChange]);
+
+  useEffect(() => {
+    const currentDebounced = debouncedOnFiltersChange.current;
+    currentDebounced(filters);
+    
     return () => {
-      debouncedFiltersChange.cancel();
+      currentDebounced.cancel();
     };
-  }, [filters, debouncedFiltersChange]);
+  }, [filters])
 
   const handleFilterChange = (key: keyof JobSearchFilters, value: string | boolean) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -48,7 +55,7 @@ const SearchFilters = ({ onFiltersChange }: SearchFiltersProps) => {
         value={filters.query}
         onChange={(value) => handleFilterChange('query', value)}
         placeholder="Search job title or company..."
-        debounceTime={500}
+        debounceTime={1000}
       />
 
       <div className="flex items-center justify-between">

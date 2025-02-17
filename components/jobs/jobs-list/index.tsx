@@ -96,7 +96,7 @@ export default function JobsPage() {
           </div>
           
           <div className="mt-4 md:mt-0 flex flex-col items-center space-x-4 md:flex-row md:items-center">
-            <select
+            {/* <select
               className="px-4 py-2 border border-gray-300 rounded-lg bg-white dark:bg-gray-800 dark:border-gray-600"
               value="relevance"
               onChange={() => {}} // TODO: Add sorting functionality
@@ -104,7 +104,7 @@ export default function JobsPage() {
               <option value="relevance">Sort by Relevance</option>
               <option value="date">Sort by Date</option>
               <option value="salary">Sort by Salary</option>
-            </select>
+            </select> */}
 
             <div>
             <Button variant='default' onClick={() => setOpenModal(true)}> Create Job </Button>
